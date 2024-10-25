@@ -8,6 +8,9 @@ gem 'devise'
 # For REST API
 gem 'rack-cors'
 
+# Authorization
+gem 'cancancan' 
+
 # load .env files
 gem 'dotenv-rails', groups: [:development, :test]
 
