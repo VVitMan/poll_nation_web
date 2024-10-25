@@ -4,8 +4,12 @@ ruby "3.3.4"
 
 # Authentication
 gem 'devise'
+
 # For REST API
 gem 'rack-cors'
+
+# load .env files
+gem 'dotenv-rails', groups: [:development, :test]
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.4", ">= 7.1.4.2"
