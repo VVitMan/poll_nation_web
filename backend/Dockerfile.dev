@@ -1,0 +1,27 @@
+# backend/Dockerfile.dev
+
+# Use the Ruby image
+FROM ruby:3.3.4
+
+# Install dependencies
+RUN apt-get update -qq && \
+    apt-get install -y nodejs postgresql-client
+
+# Set working directory
+WORKDIR /backend-development
+
+# Install gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+# Copy the rest of the application code
+COPY . .
+
+# Set environment variables
+ENV RAILS_ENV=development
+
+# Expose port for Rails server
+EXPOSE 3000
+
+# Run the Rails server in development mode
+CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]

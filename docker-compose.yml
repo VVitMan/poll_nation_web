@@ -1,28 +1,38 @@
+version: '3.8'
+
 services:
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile.dev  # Use Dockerfile.dev for backend development
     ports:
-      - "3001:3001"
+      - "3000:3000"  # Map localhost:3000 to backend container's port 3000
     depends_on:
       - db
     volumes:
-      - ./backend:/app
+      - ./backend:/backend-development  # Mount backend code for live updates
     env_file:
       - backend/.env
+    environment:
+      RAILS_ENV: development
+    command: ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
 
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile.dev  # Use Dockerfile.dev for frontend development
     ports:
-      - "3000:3000"
+      - "3001:3001"  # Map localhost:3001 to frontend container's port 3001
     depends_on:
       - backend
     volumes:
-      - ./frontend:/app
+      - ./frontend:/frontend-development  # Mount frontend code for live updates
     env_file:
       - frontend/.env
-    
+    environment:
+      REACT_APP_API_URL: http://localhost:3001  # Point frontend to backend API
+    command: ["npm", "start"]  # Start React development server with live reloading
+
   db:
     image: postgres
     environment:

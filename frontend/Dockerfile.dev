@@ -1,0 +1,22 @@
+# frontend/Dockerfile.dev
+
+# Use a Node.js image
+FROM node:20
+
+# Set working directory
+WORKDIR /frontend-development
+
+# Copy package.json and package-lock.json to install dependencies
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy all application files
+COPY . .
+
+# Expose port 3001 for development
+EXPOSE 3001
+
+# Start the app in development mode
+CMD ["npm", "start"]
